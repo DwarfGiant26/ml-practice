@@ -47,12 +47,14 @@ class ClusteringTestGenerator:
         # transform the data to be stretched
         transformation = rng.normal(size=(2, 2))
         points = ClusteringTestGenerator.generate_points(num_clusters, num_points)
-        points = np.dot(points, transformation)
+        points = points @ transformation
 
         return points
 
-    def generate_moon(num_points: int = 100, noise: float = .05) -> np.array:
-        return make_moons(200, noise=noise, random_state=0)
+    @staticmethod
+    def generate_moon_points(num_points: int = 100, noise: float = .05) -> np.array:
+        points, y_true = make_moons(num_points, noise=noise, random_state=0)
+        return points
 
 if __name__ == "__main__":
     points = ClusteringTestGenerator.generate_points(num_clusters=5)
